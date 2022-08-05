@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.mainBlock {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.textArea {
+  margin-bottom: 25px;
+  text-align: center;
+}
