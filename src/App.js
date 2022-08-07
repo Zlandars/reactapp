@@ -1,15 +1,58 @@
 // import logo from './logo.svg';
-import { useState } from "react";
+import {useRef, useState} from "react";
 import Message from "./modules/Message";
 
 function App() {
-  const [name, setName] = useState();
+    const inputEl = useRef();
+    const formEl = useRef();
+  const [messageList, setMessageList] = useState([{
+      author: 'Evgen',
+      msg: '1'
+  },{
+      author: 'Vovke',
+      msg: 'e.target.value'
+  }]);
+  function error(params) {
+      console.log('Введите в поле данные' + formEl.current[0].value);
+  }
   return (
     <div className="mainBlock">
-        <textarea className="textArea" onChange={(e) => {
-          setName(e.target.value);
-        }}></textarea>
-        <Message props={name} />
+        <form action="" ref={formEl}>
+            <label htmlFor="author">Автор сообщения</label>
+            <input id='author' type="text" placeholder='Author'/>
+            <label htmlFor="message">Сообщение</label>
+            <input id='message' type="text" placeholder='Введите текст сообщения' />
+            <button onClick={(event)=>{
+                event.preventDefault();
+                if(formEl.current[0].value && formEl.current[1].value) {
+                    setMessageList([
+                        ...messageList,
+                        {
+                            author: formEl.current[0].value ? formEl.current[0].value : error(),
+                            msg: formEl.current[1].value ? formEl.current[1].value : error()
+                        }
+                    ])
+                }
+                error(formEl.current[0], formEl.current[1]);
+
+            }}></button>
+        </form>
+        <textarea ref={inputEl} className="textArea"></textarea>
+        <button onClick={()=>{
+            setMessageList([
+                ...messageList,
+                {
+                    author: 'Evgen',
+                    msg: inputEl.current.value
+                }
+            ])
+        }}>Button</button>
+        {messageList.map((item)=>{
+            return (
+                    <Message obj={item} />
+                );
+        })}
+
     </div>
     // <div className="App">
     //   <header className="App-header">

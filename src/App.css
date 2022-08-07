@@ -48,3 +48,7 @@
   margin-bottom: 25px;
   text-align: center;
 }
+button {
+  height: 70px;
+  width: 100px;
+}
