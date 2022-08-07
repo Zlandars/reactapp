@@ -49,6 +49,8 @@
   text-align: center;
 }
 button {
-  height: 70px;
+  margin: 10px auto;
+  height:35px;
   width: 100px;
+  display: block;
 }

@@ -13,30 +13,29 @@ function App() {
       msg: 'e.target.value'
   }]);
   function error(params) {
-      console.log('Введите в поле данные' + formEl.current[0].value);
+      console.log('Введите в поле данные' + params);
   }
   return (
     <div className="mainBlock">
         <form action="" ref={formEl}>
+            <h2>Вариант 1: добавление сообщения через форму</h2>
             <label htmlFor="author">Автор сообщения</label>
             <input id='author' type="text" placeholder='Author'/>
             <label htmlFor="message">Сообщение</label>
             <input id='message' type="text" placeholder='Введите текст сообщения' />
             <button onClick={(event)=>{
                 event.preventDefault();
-                if(formEl.current[0].value && formEl.current[1].value) {
-                    setMessageList([
-                        ...messageList,
-                        {
-                            author: formEl.current[0].value ? formEl.current[0].value : error(),
-                            msg: formEl.current[1].value ? formEl.current[1].value : error()
-                        }
-                    ])
+                setMessageList([
+                    ...messageList,
+                    {
+                        author: formEl.current[0].value ? formEl.current[0].value : error(),
+                        msg: formEl.current[1].value ? formEl.current[1].value : error()
+                    }
+                ])
                 }
-                error(formEl.current[0], formEl.current[1]);
-
-            }}></button>
+            }>Button</button>
         </form>
+        <h2>Вариант 2: добавление сообщения через textarea с хардкоженым автором</h2>
         <textarea ref={inputEl} className="textArea"></textarea>
         <button onClick={()=>{
             setMessageList([
