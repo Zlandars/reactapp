@@ -1,4 +1,6 @@
 // import logo from './logo.svg';
+import { createTheme, ThemeProvider, FormControl, FormLabel, FormHelperText, TextField, FormControlLabel, Switch } from "@mui/material";
+import { green, orange } from "@mui/material/colors";
 import { useEffect, useRef, useState } from "react";
 import Message from "./modules/Message";
 
@@ -16,11 +18,18 @@ function App() {
       msg: "e.target.value",
     },
   ]);
+  const theme = createTheme({
+    status: {
+      mail: green[700],
+      danger: orange[500],
+    },
+  });
+  
   useEffect(() => {
     if (
       messageList.length > 2 &&
-      (messageList[messageList.length - 1] !==
-        messageList[messageList.length - 2])
+      messageList[messageList.length - 1] !==
+        messageList[messageList.length - 2]
     ) {
       setTimeout(() => {
         document
@@ -33,13 +42,26 @@ function App() {
     }
   }, [messageList]);
   return (
-    <div className="mainBlock">
+    <ThemeProvider theme={theme}>
+      <div className="mainBlock">
+        <FormControl>
+          <FormLabel>Добавление сообщения через форму</FormLabel>
+          <TextField
+            id="author"
+            label="author"
+          />
+        </FormControl>
       <form action="post" ref={formEl}>
-        <h2>Добавление сообщения через форму</h2>
+        <h2></h2>
         <label htmlFor="author">Автор сообщения</label>
         <input id="author" type="text" placeholder="Author" required />
         <label htmlFor="message">Сообщение</label>
-        <input id="message" type="text" placeholder="Введите текст сообщения" required />
+        <input
+          id="message"
+          type="text"
+          placeholder="Введите текст сообщения"
+          required
+        />
         <button
           onClick={(event) => {
             event.preventDefault();
@@ -63,6 +85,8 @@ function App() {
         return <Message obj={item} key={item.id} />;
       })}
     </div>
+    </ThemeProvider>
+    
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
