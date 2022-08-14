@@ -40,7 +40,7 @@
 .mainBlock {
   display: flex;
   padding: 10px;
-  flex-direction: column;
+  /*flex-direction: column;*/
   text-align: center;
 }
 
@@ -48,9 +48,6 @@
   margin-bottom: 25px;
   text-align: center;
 }
-button {
-  margin: 10px auto;
-  height:35px;
-  width: 100px;
-  display: block;
+.chat {
+  flex-grow: 1;
 }
