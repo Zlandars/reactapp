@@ -49,5 +49,11 @@
   text-align: center;
 }
 .chat {
-  flex-grow: 1;
+  margin: 0 auto;
+}
+.comment {
+  width: 150px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 10px;
 }
