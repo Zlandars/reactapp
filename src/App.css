@@ -39,9 +39,8 @@
 
 .mainBlock {
   display: flex;
-  padding: 10px;
+  padding: 100px;
   /*flex-direction: column;*/
-  text-align: center;
 }
 
 .textArea {
