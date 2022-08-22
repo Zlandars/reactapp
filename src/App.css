@@ -1,5 +1,5 @@
+
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -55,4 +55,7 @@
   padding: 15px;
   border: 1px solid;
   border-radius: 10px;
+}
+.counter {
+  margin: 0 auto ;
 }

@@ -21,8 +21,17 @@ const ChatList = () => {
 			chatAuthor: 'Evgen',
 			lastMessage: {
 				id: 2,
+				author: "Evgen",
+				msg: "e.target.value1",
+			}
+		},
+		{
+			id: 2,
+			chatAuthor: 'Voovke',
+			lastMessage: {
+				id: 2,
 				author: "Vovke",
-				msg: "e.target.value",
+				msg: "e.target.value2",
 			}
 		}
 	]);
