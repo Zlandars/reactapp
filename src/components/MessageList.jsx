@@ -1,35 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Message from "./Message";
-import {useLocation} from "react-router-dom";
-import PageNotFound from "./PageNotFound";
+import {ChatContext} from "../Context";
 
 const MessageList = () => {
-        const location = useLocation();
-        const chatId = location.pathname.split('/')[location.pathname.split('/').length - 1];
         const [answer, setAnswer] = useState();
-        const [messageList, setMessageList] = useState([
-                {
-                    id: 1,
-                        chat_id: 1,
-                    author: "Evgen",
-                    msg: "1",
-                },
-        ]);
+        const { chats, handleAdd } = useContext(ChatContext);
+
         useEffect(() => {
                 if (
-                        messageList.length > 2 &&
-                        messageList[messageList.length - 1] !==
-                        messageList[messageList.length - 2]
+                        chats.length > 2 &&
+                        chats[chats.length - 1] !==
+                        chats[chats.length - 2]
                 ) {
                         setTimeout(() => {
-                                setAnswer(messageList[messageList.length - 1].author);
+                                setAnswer(chats[chats.length - 1].author);
                         }, 1000);
                 }
-        }, [messageList]);
-        console.log(chatId);
+        }, [chats]);
     return (
             <div className="chat">
                 <Box
@@ -39,20 +29,12 @@ const MessageList = () => {
                         mt={4}
                         display="flex"
                         flexDirection="column"
-                        onSubmit={(event) => {
-                            event.preventDefault();
-                            setMessageList([
-                                ...messageList,
-                                {
-                                        id: messageList.length + 1,
-                                        chat_id: chatId,
-                                         author: event.target.author.value,
-                                         msg: event.target.text.value,
-                                },
-                            ]);
-                            event.target.author.value = "";
-                            event.target.text.value = "";
-                            event.target.author.focus();
+                        onSubmit={ (event) => {
+                                event.preventDefault();
+                                handleAdd({
+                                        author: event.target.author.value,
+                                        msg: event.target.text.value,
+                                })
                         }}
                 >
                     <TextField
@@ -80,14 +62,9 @@ const MessageList = () => {
                         Отправить
                     </Button>
                 </Box>
-
-                {messageList.map((item) => {
-                        if (chatId === item.chat_id) {
-                                return <Message obj={item} key={item.id} />;
-                        } else {
-                                return <PageNotFound />
-                        }
-                })}
+                {
+                        chats.map((item) => { return <Message obj={item} key={item.id} />})
+                }
                 {answer && <Button sx='margin: 10px' variant="outlined" size="small" disabled={true}>Спасибо за комментарий {answer}</Button>}
             </div>
     );
