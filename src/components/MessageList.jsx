@@ -2,25 +2,24 @@ import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import Message from "./Message";
 import {useLocation} from "react-router-dom";
+import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 
 const MessageList = () => {
         const location = useLocation();
-        const chatId = location.pathname.split('/')[location.pathname.split('/').length - 1];
+        const chatId = Number(location.pathname.split('/')[location.pathname.split('/').length - 1]);
         const [answer, setAnswer] = useState();
         const [messageList, setMessageList] = useState([
                 {
                     id: 1,
-                        chat_id: 1,
+                    chat_id: 1,
                     author: "Evgen",
                     msg: "1",
                 },
         ]);
         useEffect(() => {
                 if (
-                        messageList.length > 2 &&
                         messageList[messageList.length - 1] !==
                         messageList[messageList.length - 2]
                 ) {
@@ -29,7 +28,6 @@ const MessageList = () => {
                         }, 1000);
                 }
         }, [messageList]);
-        console.log(chatId);
     return (
             <div className="chat">
                 <Box
@@ -83,12 +81,13 @@ const MessageList = () => {
 
                 {messageList.map((item) => {
                         if (chatId === item.chat_id) {
+
                                 return <Message obj={item} key={item.id} />;
                         } else {
                                 return <PageNotFound />
                         }
                 })}
-                {answer && <Button sx='margin: 10px' variant="outlined" size="small" disabled={true}>Спасибо за комментарий {answer}</Button>}
+                {answer && <Button variant="outlined" size="small" disabled={true}>Спасибо за комментарий {answer}</Button>}
             </div>
     );
 };

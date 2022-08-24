@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
 	TextField,
 	List,
@@ -12,25 +12,30 @@ import {
 import {Link} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import {useDispatch, useSelector} from "react-redux";
 
 const ChatList = () => {
-	const formEl = useRef(null);
-	const [chatList, setChatsList] = useState([
-		{
-			id: 1,
-			chatAuthor: 'Evgen',
-			lastMessage: {
-				id: 2,
-				author: "Vovke",
-				msg: "e.target.value",
-			}
-		}
-	]);
+	const message = useSelector(state => state.chatList)
+	console.log(message)
+	const [chatName, setChatName] = useState('');
+	const [chatDescr, setChatDescr] = useState('');
+	const dispatch = useDispatch();
 
-	function handleDelete(id) {
-		return setChatsList(chatList.filter(item => item.id !== id));
+	const keys = Object.keys(message);
+	const chatId = keys[keys.length - 1]+1;
+	const addChat = () => {
+		const obj = {
+			[chatId]: [{
+				chatOwner: chatName,
+				chatDescription: chatDescr
+			}],
+		};
+		dispatch({type: 'addChat', payload: obj});
 	}
-
+	function handleDelete(id) {
+		delete message[id];
+		dispatch({type: 'addChat', payload: message});
+	}
 	return (
 		<List
 			sx={{
@@ -40,15 +45,15 @@ const ChatList = () => {
 				flexGrow: 1,
 			}}
 		>
-			{chatList.map((item, index, array) => {
-				return <div key={item.id}>
+			{ keys.map(item => {
+				return <div key={item}>
 					<ListItem alignItems="flex-start">
-						<Link to={`/chat/${item.id}`}>
+						<Link to={`/chat/${item}`}>
 							<ListItemAvatar>
 								<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
 							</ListItemAvatar>
 							<ListItemText
-								primary={item.chatAuthor}
+								primary={message[item][0].chatOwner}
 								secondary={
 									<React.Fragment>
 										<Typography
@@ -57,18 +62,16 @@ const ChatList = () => {
 											variant="body2"
 											color="text.primary"
 										>
-											{item.lastMessage.author}
 										</Typography>
-										{item.lastMessage.msg}
+										{message[item][0].chatDescription}
 									</React.Fragment>
 								}
 							/>
 						</Link>
-						<Button onClick={()=>{handleDelete(item.id)}} >X</Button>
+						<Button onClick={()=>{handleDelete(item)}} >X</Button>
 					</ListItem>
-					{ index !== array.length - 1 && <Divider variant="inset" component="li" /> }
+					{ item !== keys.length - 1 && <Divider variant="inset" component="li" /> }
 				</div>
-					;
 			})}
 			<Box
 				component="form"
@@ -79,15 +82,6 @@ const ChatList = () => {
 				flexDirection="column"
 				onSubmit={(event) => {
 					event.preventDefault();
-					setChatsList(prev => [
-						...prev,
-						{
-							id: prev.length + 1,
-							chatAuthor: event.target.author.value,
-							lastMessage: {},
-						},
-					]);
-
 					event.target.author.value = "";
 				}}
 			>
@@ -97,13 +91,26 @@ const ChatList = () => {
 					variant="outlined"
 					sx={{ mb: 2 }}
 					name="author"
-					inputRef={formEl}
+					onChange={(e)=> {
+						setChatName(e.target.value);
+					}}
+				/>
+				<TextField
+					id="name"
+					label="Описание чата"
+					variant="outlined"
+					sx={{ mb: 2 }}
+					name="description"
+					onChange={(e)=> {
+						setChatDescr(e.target.value);
+					}}
 				/>
 				<Button
 					variant="outlined"
 					size="small"
 					type="submit"
 					sx={{ mb: 4 }}
+					onClick={addChat}
 				>
 					Отправить
 				</Button>
