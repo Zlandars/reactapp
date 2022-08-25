@@ -38,10 +38,28 @@ export const messageReducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'editChat': {
+        case 'addMessage': {
             return {
                 ...state,
                 chatList: {
+                    ...state.chatList,
+                    [action.payload.id]: [
+                        ...state.chatList[action.payload.id],
+                        ...action.payload.obj
+
+                    ]
+                }
+            }
+        }
+        case 'deleteMessage': {
+            // const obj = state.chatList[action.payload.chat_id].filter((item)=>{
+            //     if (item.id !== action.payload.id_msg) return item
+            // })
+            console.log('Не придумал пока, но решил не делать как проще...)')
+            return {
+                ...state,
+                chatList: {
+                    ...state.chatList,
                     ...action.payload
                 }
             }

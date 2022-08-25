@@ -13,10 +13,10 @@ import {Link} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
+import {addList} from "./selectors";
 
 const ChatList = () => {
-	const message = useSelector(state => state.chatList)
-	console.log(message)
+	const message = useSelector(addList)
 	const [chatName, setChatName] = useState('');
 	const [chatDescr, setChatDescr] = useState('');
 	const dispatch = useDispatch();
