@@ -15,7 +15,7 @@ const MessageList = () => {
         return item.chat_id === chatId;
     });
     const [answer, setAnswer] = useState();
-    const author = useSelector(addToken);
+    const author = useSelector(addToken).username;
     const [message, setMessage] = useState();
     const [delay, setDelay] = useState(null);
     const dispatch = useDispatch();
