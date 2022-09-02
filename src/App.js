@@ -7,7 +7,6 @@ import PageNotFound from "./components/PageNotFound";
 import Profile from "./components/Profile";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {chats, ChatContext} from "./Context";
-import Counter from "./components/redux/Counter";
 
 const theme = createTheme({
 	palette: {
@@ -27,7 +26,7 @@ function App() {
 	const [chatList, setChatList] = useState(chats);
 	return (
 		<ThemeProvider theme={theme}>
-			<Counter />
+			{/*<Counter />*/}
 
 			<ChatContext.Provider value={{
 				chats: chatList,

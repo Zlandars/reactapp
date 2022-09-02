@@ -18,22 +18,20 @@ export const chatReducer = (state = initialState, action) => {
         case 'addChat': {
             return {
                 ...state,
-                chatList: {
+                chatList: [
                     ...state.chatList,
-                    [action.payload.chat_id]: {
-                        ...action.payload.obj
-                    }
-                }
+                    action.payload
+                ]
             }
         }
         case 'deleteChat': {
             return {
                 ...state,
-                chatList: {
-                    ...state.chatList.filter((item) => {
-                        return item.chat_id !== action.payload.chat_id;
+                chatList: [
+                        ...state.chatList.filter((item) => {
+                        return item.chat_id !== action.payload;
                     })
-                }
+            ]
             }
         }
         default: {

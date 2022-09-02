@@ -6,24 +6,32 @@ import {useParams} from "react-router-dom";
 import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 import {useDispatch, useSelector} from "react-redux";
-import {addList} from "./selectors";
+import {addMessageList, addToken} from "./selectors";
 
 const MessageList = () => {
-    const chatId = useParams().id;
-    const messageArr = useSelector(addList);
-    const messageList = messageArr[chatId].filter((item, index) => {
-        if (index !== 0) {
-            return item;
-        }
-        return null;
+    const chatId = Number(useParams().id);
+    const messageArr = useSelector(addMessageList);
+    const messageList = messageArr.filter((item) => {
+        return item.chat_id === chatId;
     });
     const [answer, setAnswer] = useState();
-    const [author, setAuthor] = useState();
+    const author = useSelector(addToken);
     const [message, setMessage] = useState();
+    const [delay, setDelay] = useState(null);
     const dispatch = useDispatch();
     function handleDelete(id) {
-
-        dispatch({type: 'deleteMessage', payload: {chat_id: chatId, id_msg: id}});
+        dispatch({type: 'deleteMessage', payload:  id});
+    }
+    function handleAdd(event) {
+            event.preventDefault();
+            const obj = {
+                    id: messageArr.length,
+                    chat_id: chatId,
+                    author: author,
+                    msg: message,
+            };
+            dispatch({type: 'addMessage', payload: obj, meta: delay})
+            event.target.text.value = "";
     }
     useEffect(() => {
         setTimeout(() => {
@@ -39,29 +47,8 @@ const MessageList = () => {
                 mt={4}
                 display="flex"
                 flexDirection="column"
-                onSubmit={(event) => {
-                    event.preventDefault();
-                    const obj = [{
-                            id: Math.random(),
-                            author: author,
-                            msg: message,
-                        }];
-                    dispatch({type: 'addMessage', payload: {id: chatId, obj: obj}})
-                    event.target.author.value = "";
-                    event.target.text.value = "";
-                    event.target.author.focus();
-                }}
+                onSubmit={(e) => handleAdd(e)}
             >
-                <TextField
-                    id="name"
-                    label="Имя"
-                    color='secondary'
-                    variant="outlined"
-                    sx={{mb: 2}}
-                    name="author"
-                    onChange={(e)=>{
-                        setAuthor(e.target.value);}}
-                />
                 <TextField
                     id="message"
                     label="Сообщение"
@@ -72,6 +59,18 @@ const MessageList = () => {
                     onChange={(e)=>{
                         setMessage(e.target.value);}}
                 />
+                    <TextField
+                            id="message"
+                            type={'number'}
+                            label="Задержка перед отправкой (секунд)"
+                            color='secondary'
+                            variant="outlined"
+                            sx={{mb: 2}}
+                            name="text"
+                            onChange={(e)=>{
+                                    setDelay(e.target.value * 1000);
+                            }}
+                    />
                 <Button
                     variant="outlined"
                     size="small"

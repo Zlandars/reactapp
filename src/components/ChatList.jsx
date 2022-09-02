@@ -13,28 +13,25 @@ import {Link} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addList} from "./selectors";
+import {addChatList} from "./selectors";
 
 const ChatList = () => {
-	const message = useSelector(addList)
+	const chats = useSelector(addChatList);
 	const [chatName, setChatName] = useState('');
 	const [chatDescr, setChatDescr] = useState('');
 	const dispatch = useDispatch();
 
-	const keys = Object.keys(message);
-	const chatId = keys[keys.length - 1]+1;
+	const chatId = chats.length + 1;
 	const addChat = () => {
 		const obj = {
-			[chatId]: [{
-				chatOwner: chatName,
-				chatDescription: chatDescr
-			}],
+			chat_id: chatId,
+			chatOwner: chatName,
+			chatDescription: chatDescr,
 		};
 		dispatch({type: 'addChat', payload: obj});
 	}
 	function handleDelete(id) {
-		delete message[id];
-		dispatch({type: 'addChat', payload: message});
+		dispatch({type: 'deleteChat', payload: id});
 	}
 	return (
 		<List
@@ -45,15 +42,15 @@ const ChatList = () => {
 				flexGrow: 1,
 			}}
 		>
-			{ keys.map(item => {
-				return <div key={item}>
+			{ chats.map((item) => {
+				return <div key={item.chat_id}>
 					<ListItem alignItems="flex-start">
-						<Link to={`/chat/${item}`}>
+						<Link to={`/chat/${item.chat_id}`}>
 							<ListItemAvatar>
 								<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
 							</ListItemAvatar>
 							<ListItemText
-								primary={message[item][0].chatOwner}
+								primary={item.chatOwner}
 								secondary={
 									<React.Fragment>
 										<Typography
@@ -63,14 +60,14 @@ const ChatList = () => {
 											color="text.primary"
 										>
 										</Typography>
-										{message[item][0].chatDescription}
+										{item.chatDescription}
 									</React.Fragment>
 								}
 							/>
 						</Link>
-						<Button onClick={()=>{handleDelete(item)}} >X</Button>
+						<Button onClick={()=>{handleDelete(item.chat_id)}} >X</Button>
 					</ListItem>
-					{ item !== keys.length - 1 && <Divider variant="inset" component="li" /> }
+					{ item.chat_id !== chats.length - 1 && <Divider variant="inset" component="li" /> }
 				</div>
 			})}
 			<Box
@@ -110,7 +107,7 @@ const ChatList = () => {
 					size="small"
 					type="submit"
 					sx={{ mb: 4 }}
-					onClick={addChat}
+					onClick={() => addChat()}
 				>
 					Отправить
 				</Button>
