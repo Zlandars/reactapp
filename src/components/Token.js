@@ -1,36 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addToken} from "./selectors";
-import {Input} from "@mui/material";
+import {getUsers} from "../redux/reducers/token";
+import {activeUser, getUsersList} from "./selectors";
 import Button from "@mui/material/Button";
 
-const Token = () => {
-	const token = useSelector(addToken);
+export const Token = () => {
+	const actualUser = useSelector(activeUser);
 	const dispatch = useDispatch();
-	const [users, setUsers] = useState([]);
-	const [error, setError] = useState(null);
-	useEffect(()=> {
-		fetch('https://jsonplaceholder.typicode.com/users/')
-			.then(response=>response.json())
-			.then(data=>setUsers(data))
-			.catch(err=>setError(err))
-	}, [])
-	console.log(users)
+	const users = useSelector(getUsersList);
 	function handleSelect(id) {
-		const obj = users.filter((item)=>item.id === id);
-		dispatch({type: 'addToken', payload: {name: obj.name, username: obj.username, email: obj.email}});
+		const obj = users.filter((item)=>item.id === id).shift();
+		dispatch({type: 'addUser', payload: {id: obj.id, name: obj.name, username: obj.username, email: obj.email}});
 	}
+	useEffect(()=>{
+		dispatch(getUsers())
+	},[])
 	return (
 		<>
 			{users.map((item) => {
-				return <Button onClick={()=>handleSelect(item.id)} key={item.id}>
-					{item.username}
-				</Button>
+				return <Button onClick={()=>handleSelect(item.id)} key={item.id} >{item.username} {item.id === actualUser.id && <p>isActive</p>}</Button>
 			})}
-			{error && <h1>{error}</h1>}
-			<h2>{token}</h2>
 		</>
 	);
 };
-
-export default Token;

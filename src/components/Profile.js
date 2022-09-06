@@ -1,10 +1,12 @@
-import React from 'react';
-import Token from "./Token";
+import React, {useEffect} from 'react';
+import {Token} from "./Token";
 
 const Profile = () => {
-
+	useEffect(()=>{
+		document.title='ChangeProfile';
+	},[])
 	return (
-		<div>
+		<div style={{display: 'flex', flexDirection: 'column'}}>
 			This is Page Profile
 			<Token></Token>
 		</div>

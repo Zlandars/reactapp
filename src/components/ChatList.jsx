@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
 	TextField,
 	List,
@@ -33,6 +33,9 @@ const ChatList = () => {
 	function handleDelete(id) {
 		dispatch({type: 'deleteChat', payload: id});
 	}
+	useEffect(()=>{
+		document.title = 'ChatList';
+	},[])
 	return (
 		<List
 			sx={{

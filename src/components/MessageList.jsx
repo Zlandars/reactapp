@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessageList, addToken} from "./selectors";
+import {addMessageList, activeUser} from "./selectors";
 
 const MessageList = () => {
     const chatId = Number(useParams().id);
@@ -15,12 +15,12 @@ const MessageList = () => {
         return item.chat_id === chatId;
     });
     const [answer, setAnswer] = useState();
-    const author = useSelector(addToken).username;
+    const author = useSelector(activeUser).username;
     const [message, setMessage] = useState();
     const [delay, setDelay] = useState(null);
     const dispatch = useDispatch();
     function handleDelete(id) {
-        dispatch({type: 'deleteMessage', payload:  id});
+        dispatch({type: 'deleteMessage', payload:  id, meta: chatId});
     }
     function handleAdd(event) {
             event.preventDefault();
@@ -30,13 +30,18 @@ const MessageList = () => {
                     author: author,
                     msg: message,
             };
-            dispatch({type: 'addMessage', payload: obj, meta: delay})
+            setTimeout(()=>{
+                    dispatch({type: 'addMessage', payload: obj})
+            }, delay);
             event.target.text.value = "";
     }
     useEffect(() => {
-        setTimeout(() => {
-            setAnswer(messageList[messageList.length - 1].author);
-        }, 1000);
+            document.title = 'MessageList';
+            if (messageList > 0 ) {
+                setTimeout(() => {
+                        setAnswer(messageList[messageList.length - 1].author);
+                }, 1000);
+        }
     }, [messageList]);
     return (
         <div className="chat">
