@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addChatList} from "./selectors";
+import {ADD_CHAT, DELETE_CHAT} from "../redux/ActionType";
 
 const ChatList = () => {
 	const chats = useSelector(addChatList);
@@ -28,10 +29,10 @@ const ChatList = () => {
 			chatOwner: chatName,
 			chatDescription: chatDescr,
 		};
-		dispatch({type: 'addChat', payload: obj});
+		dispatch({type: ADD_CHAT, payload: obj});
 	}
 	function handleDelete(id) {
-		dispatch({type: 'deleteChat', payload: id});
+		dispatch({type: DELETE_CHAT, payload: id});
 	}
 	useEffect(()=>{
 		document.title = 'ChatList';

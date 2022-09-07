@@ -7,6 +7,7 @@ import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 import {useDispatch, useSelector} from "react-redux";
 import {addMessageList, activeUser} from "./selectors";
+import {ADD_MESSAGE, DELETE_MESSAGE} from "../redux/ActionType";
 
 const MessageList = () => {
     const chatId = Number(useParams().id);
@@ -20,7 +21,7 @@ const MessageList = () => {
     const [delay, setDelay] = useState(null);
     const dispatch = useDispatch();
     function handleDelete(id) {
-        dispatch({type: 'deleteMessage', payload:  id, meta: chatId});
+        dispatch({type: DELETE_MESSAGE, payload:  id, meta: chatId});
     }
     function handleAdd(event) {
             event.preventDefault();
@@ -31,7 +32,7 @@ const MessageList = () => {
                     msg: message,
             };
             setTimeout(()=>{
-                    dispatch({type: 'addMessage', payload: obj})
+                    dispatch({type: ADD_MESSAGE, payload: obj})
             }, delay);
             event.target.text.value = "";
     }
