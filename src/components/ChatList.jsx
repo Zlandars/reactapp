@@ -21,6 +21,27 @@ const ChatList = () => {
 	const [chatName, setChatName] = useState('');
 	const [chatDescr, setChatDescr] = useState('');
 	const dispatch = useDispatch();
+	const formEl = useRef(null);
+	const [chatList, setChatsList] = useState([
+		{
+			id: 1,
+			chatAuthor: 'Evgen',
+			lastMessage: {
+				id: 2,
+				author: "Evgen",
+				msg: "e.target.value1",
+			}
+		},
+		{
+			id: 2,
+			chatAuthor: 'Voovke',
+			lastMessage: {
+				id: 2,
+				author: "Vovke",
+				msg: "e.target.value2",
+			}
+		}
+	]);
 
 	const chatId = chats.length + 1;
 	const addChat = () => {
