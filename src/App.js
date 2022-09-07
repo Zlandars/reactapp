@@ -7,7 +7,12 @@ import PageNotFound from "./components/PageNotFound";
 import Profile from "./components/Profile";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {chats, ChatContext} from "./Context";
-import Counter from "./components/redux/Counter";
+
+import {useSelector} from "react-redux";
+import {isError, isLoading} from "./components/selectors";
+import Error from "./components/Error";
+import Button from "@mui/material/Button";
+
 
 const theme = createTheme({
 	palette: {
@@ -25,9 +30,14 @@ const theme = createTheme({
 
 function App() {
 	const [chatList, setChatList] = useState(chats);
+
+	const allData = useSelector(state => state);
+	const loading = useSelector(isLoading);
+	const error = useSelector(isError);
+	if (loading || error) return <Error />;
 	return (
 		<ThemeProvider theme={theme}>
-			<Counter />
+			{/*<Counter />*/}
 
 			<ChatContext.Provider value={{
 				chats: chatList,
@@ -42,9 +52,17 @@ function App() {
 						])
 				}
 			}}>
+				<Link to={'/'}>ChatList</Link>
+				<Link to={'/profile'}>Profile</Link>
+				<div className="mainBlock">
+					<Button onClick={()=>{
+						console.log(allData)
+					}}>LOG ALL DATA</Button>
+
 				<div className="mainBlock">
 					<Link to={'/'}>ChatList</Link>
 					<Link to={'/profile'}>Profile</Link>
+
 					<Routes>
 						<Route path={'/'} element={<ChatList/>}/>
 						<Route path={'/chat/:id'} element={<MessageList/>}/>
@@ -54,9 +72,7 @@ function App() {
 				</div>
 			</ChatContext.Provider>
 
-
 		</ThemeProvider>
-
 	);
 }
 
