@@ -2,14 +2,8 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {messageReducer} from "./reducers/message";
 import {chatReducer} from "./reducers/chats";
 import {tokenReducer} from "./reducers/token";
-// import storage from "redux-persist/lib/storage"
-// import {persistReducer, persistStore} from "redux-persist";
 import thunk from "redux-thunk";
-
-// const persistConfig =  {
-// 	key: 'root',
-// 	storage
-// }
+import Reducer from "./reducers/reducer";
 
 // const logger = store => next => action => {
 // 	console.log('dispatching', action);
@@ -33,8 +27,6 @@ import thunk from "redux-thunk";
 
 
 
-const combineReducer = combineReducers({messageReducer, chatReducer, tokenReducer})
+const combineReducer = combineReducers({messageReducer, chatReducer, tokenReducer, Reducer})
 
-// const persistedReducer = persistReducer(persistConfig, combineReducer);
 export const InitialStore = createStore(combineReducer, applyMiddleware(thunk));
-// export const persist = persistStore(InitialStore);

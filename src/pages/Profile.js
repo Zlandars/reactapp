@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Token} from "./Token";
+import {Token} from "../components/Token";
 
 const Profile = () => {
 	useEffect(()=>{
