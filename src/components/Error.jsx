@@ -2,20 +2,20 @@ import React from 'react';
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../redux/reducers/token";
-import {IS_LOADING} from "../redux/ActionType";
+import {useNavigate} from "react-router-dom";
 
 
 const Error = () => {
 	const dispatch = useDispatch();
-	const state = useSelector(state => state)
+	const state = useSelector(state => state);
+	const navigate = useNavigate();
 	return (
 		<>
-			<Button onClick={()=> console.log(state)}> LOG STATE </Button>
-			<Button onClick={()=> dispatch({type:IS_LOADING})}> isLoading</Button>
+			<Button onClick={()=> navigate('/')}> HomePage </Button>
 			<Button onClick={()=> dispatch(getUsers)}> getUsers()</Button>
 
-			{state.tokenReducer.error && <h1>{state.tokenReducer.error}</h1>}
-			{state.tokenReducer.load && <h1>Загрузка данных</h1>}
+			{state.Reducer.error && <h1>{state.Reducer.error}</h1>}
+			{state.Reducer.loading && <h1>Загрузка данных</h1>}
 		</>
 	);
 };

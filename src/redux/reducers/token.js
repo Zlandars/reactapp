@@ -1,4 +1,4 @@
-import {ADD_USER, GET_USERS, IS_ERROR, IS_LOADING} from "../ActionType";
+import * as types from "../ActionType";
 
 const initialState = {
     activeUser: {
@@ -8,32 +8,16 @@ const initialState = {
         username: "Bret",
     },
     userList: [],
-    load: false,
-    error: null,
 }
 export const tokenReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_USERS: {
-            console.log(state)
+        case types.GET_USERS: {
             return {
                 ...state,
                 userList: action.payload,
-                load: false,
-                error: null
             }
         }
-        case IS_ERROR:
-            return {
-                ...state,
-                error: action.payload
-            }
-        case IS_LOADING:
-            console.log('Call isLoading')
-            return {
-                ...state,
-                load: true
-            }
-        case ADD_USER:
+        case types.ADD_USER:
             return {
                 ...state,
                 activeUser: action.payload
@@ -47,14 +31,12 @@ export const tokenReducer = (state = initialState, action) => {
 
 export const  getUsers = () => {
     return async dispatch => {
-        // страница бесконечно грузит данные. Не понимаю из-за чего и не выходит из загрузки...
-        // dispatch({type: IS_LOADING})
         try {
             const response = await fetch('https://jsonplaceholder.typicode.com/users/');
             const data = await response.json();
-            dispatch({type: GET_USERS, payload: data})
+            dispatch({type: types.GET_USERS, payload: data})
         } catch (e) {
-            dispatch({type: IS_ERROR, payload: e.toString()})
+            dispatch({type: types.LOGOUT_ERROR, payload: e.toString()})
         }
     }
 };
