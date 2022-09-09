@@ -1,46 +1,65 @@
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
 .header a {
-  display: block;
+    display: block;
 }
+
 .header {
-  margin: 20px;
-  display: flex;
-  justify-content: space-around;
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    background: center / contain no-repeat url("https://sun9-77.userapi.com/impf/c836732/v836732075/24738/0lKvcP1pCDs.jpg?size=604x604&quality=96&sign=6ad9ac06003c4eccdb26acb782c36f94&type=album");
 }
 
 .content {
-  display: flex;
+    display: flex;
+    justify-content: center;
+}
+
+.customForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.customForm label {
+    padding: 10px;
+    background: #b1abab;
 }

@@ -22,8 +22,7 @@ const SignInPage = () => {
 		}
 	}, [navigate, user])
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}  className={'customForm'}>
 				<label htmlFor={'email'}>email</label>
 				<input type={'email'} id={'email'} onChange={(e)=>{
 					setEmail(e.target.value);
@@ -34,7 +33,6 @@ const SignInPage = () => {
 				}} value={password} />
 				<Button type={'submit'}>SignIn</Button>
 			</form>
-		</div>
 	);
 };
 

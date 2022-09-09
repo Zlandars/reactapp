@@ -16,33 +16,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {addChatList} from "../components/selectors";
 import {ADD_CHAT, DELETE_CHAT} from "../redux/ActionType";
 
-const ChatList = () => {
+const HomePage = () => {
 	const chats = useSelector(addChatList);
 	const [chatName, setChatName] = useState('');
 	const [chatDescr, setChatDescr] = useState('');
 	const dispatch = useDispatch();
-	const formEl = useRef(null);
-	const [chatList, setChatsList] = useState([
-		{
-			id: 1,
-			chatAuthor: 'Evgen',
-			lastMessage: {
-				id: 2,
-				author: "Evgen",
-				msg: "e.target.value1",
-			}
-		},
-		{
-			id: 2,
-			chatAuthor: 'Voovke',
-			lastMessage: {
-				id: 2,
-				author: "Vovke",
-				msg: "e.target.value2",
-			}
-		}
-	]);
-
 	const chatId = chats.length + 1;
 	const addChat = () => {
 		const obj = {
@@ -52,12 +30,14 @@ const ChatList = () => {
 		};
 		dispatch({type: ADD_CHAT, payload: obj});
 	}
+
 	function handleDelete(id) {
 		dispatch({type: DELETE_CHAT, payload: id});
 	}
-	useEffect(()=>{
-		document.title = 'ChatList';
-	},[])
+
+	useEffect(() => {
+		document.title = 'HomePage';
+	}, [])
 	return (
 		<List
 			sx={{
@@ -68,19 +48,20 @@ const ChatList = () => {
 				flexGrow: 1,
 			}}
 		>
-			{ chats.map((item) => {
+			{chats.map((item) => {
 				return <div key={item.chat_id}>
-					<ListItem alignItems="flex-start">
+					<ListItem>
 						<Link to={`/chat/${item.chat_id}`}>
 							<ListItemAvatar>
-								<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+								<Avatar alt="Remy Sharp"
+									src="/static/images/avatar/1.jpg"/>
 							</ListItemAvatar>
 							<ListItemText
 								primary={item.chatOwner}
 								secondary={
 									<React.Fragment>
 										<Typography
-											sx={{ display: "inline" }}
+											sx={{display: "inline"}}
 											component="span"
 											variant="body2"
 											color="text.primary"
@@ -91,9 +72,11 @@ const ChatList = () => {
 								}
 							/>
 						</Link>
-						<Button onClick={()=>{handleDelete(item.chat_id)}} >X</Button>
+						<Button onClick={() => {
+							handleDelete(item.chat_id)
+						}}>X</Button>
 					</ListItem>
-					{ item.chat_id !== chats.length - 1 && <Divider variant="inset" component="li" /> }
+					{item.chat_id !== chats.length - 1 && <Divider variant="inset" component="li"/>}
 				</div>
 			})}
 			<Box
@@ -112,9 +95,9 @@ const ChatList = () => {
 					id="name"
 					label="Создатель чата"
 					variant="outlined"
-					sx={{ mb: 2 }}
+					sx={{mb: 2}}
 					name="author"
-					onChange={(e)=> {
+					onChange={(e) => {
 						setChatName(e.target.value);
 					}}
 				/>
@@ -122,9 +105,9 @@ const ChatList = () => {
 					id="name"
 					label="Описание чата"
 					variant="outlined"
-					sx={{ mb: 2 }}
+					sx={{mb: 2}}
 					name="description"
-					onChange={(e)=> {
+					onChange={(e) => {
 						setChatDescr(e.target.value);
 					}}
 				/>
@@ -132,7 +115,7 @@ const ChatList = () => {
 					variant="outlined"
 					size="small"
 					type="submit"
-					sx={{ mb: 4 }}
+					sx={{mb: 4}}
 					onClick={() => addChat()}
 				>
 					Отправить
@@ -142,4 +125,4 @@ const ChatList = () => {
 	);
 };
 
-export default ChatList;
+export default HomePage;

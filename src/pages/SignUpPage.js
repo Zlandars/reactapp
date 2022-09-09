@@ -44,9 +44,7 @@ const SignUpPage = () => {
 		dispatch(registerInitiate(email,password,displayName))
 	}
 	return (
-		<div>
-			<Link to={'/signin'}>SignIn</Link>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className={'customForm'}>
 				<label htmlFor={'email'}>email</label>
 				<input type={'email'} id={'email'} onChange={(e)=>{
 					handleChange(e.target);
@@ -65,7 +63,6 @@ const SignUpPage = () => {
 				}} value={displayName} />
 				<Button type={'submit'}>SignUp</Button>
 			</form>
-		</div>
 	);
 };
 
