@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessageList, activeUser} from "../components/selectors";
+import {addMessageList, activeUser} from "../components/redux/selectors";
 import {ADD_MESSAGE, DELETE_MESSAGE} from "../redux/ActionType";
 
 const MessageList = () => {

@@ -13,7 +13,7 @@ import {Link} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addChatList} from "../components/selectors";
+import {addChatList} from "../components/redux/selectors";
 import {ADD_CHAT, DELETE_CHAT} from "../redux/ActionType";
 
 const HomePage = () => {

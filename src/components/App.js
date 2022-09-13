@@ -16,19 +16,18 @@ function App() {
 
 	if (loading || error) return <Error/>
 	return (
-		<div className={'mainBlock'}>
-			<Header/>
-			<div className="content">
-				<Routes>
-					<Route path={'/'} element={<HomePage/>}/>
-					<Route path={'/chat/:id'} element={<MessageList/>}/>
-					<Route path={'/profile'} element={<Profile/>}/>
-					<Route path={'/signin'} element={<SignInPage/>}/>
-					<Route path={'/signup'} element={<SignUpPage/>}/>
-					<Route path={'*'} element={<PageNotFound/>}/>
-				</Routes>
-			</div>
-		</div>
+		<>
+			<Header />
+			<Routes>
+				<Route path={'/'} element={<HomePage/>}/>
+				<Route path={'/chat/:id'} element={<MessageList/>}/>
+				<Route path={'/profile'} element={<Profile/>}/>
+				<Route path={'/signin'} element={<SignInPage />}/>
+				<Route path={'/signup'} element={<SignUpPage/>}/>
+				<Route path={'*'} element={<PageNotFound/>}/>
+			</Routes>
+		</>
+
 	);
 }
 

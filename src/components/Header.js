@@ -10,7 +10,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	return (
-		<div className="header">
+		<header className="header">
 			<Link to={'/'} className={'logo'}></Link>
 			<MegaLink to={'/profile'}>Profile</MegaLink>
 			{state ? '' : <MegaLink to={'/signup'}>Registration</MegaLink>}
@@ -19,7 +19,7 @@ const Header = () => {
 			}}>{state.email}</Button> : <Button onClick={() => {
 				navigate('/signin');
 			}}>ВОЙТИ</Button>}
-		</div>
+		</header>
 	);
 };
 
