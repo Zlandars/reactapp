@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "@mui/material/Button";
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {registerInitiate} from "../redux/actions";
 
 const SignUpPage = () => {
@@ -10,15 +9,6 @@ const SignUpPage = () => {
 	const [passwordConfirm, setPasswordConfirm] = useState();
 	const [displayName, setDisplayName] = useState();
 	const dispatch = useDispatch();
-	const user = useSelector(state => state.Reducer.currentUser);
-	const navigate = useNavigate();
-	useEffect(()=>{
-		if(user){
-			setTimeout(()=>{
-				navigate('/');
-			}, 5000)
-		}
-	}, [navigate, user])
 	function handleChange(e) {
 		switch (e.id) {
 			case 'email':
@@ -44,9 +34,7 @@ const SignUpPage = () => {
 		dispatch(registerInitiate(email,password,displayName))
 	}
 	return (
-		<div>
-			<Link to={'/signin'}>SignIn</Link>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className={'customForm'}>
 				<label htmlFor={'email'}>email</label>
 				<input type={'email'} id={'email'} onChange={(e)=>{
 					handleChange(e.target);
@@ -65,7 +53,6 @@ const SignUpPage = () => {
 				}} value={displayName} />
 				<Button type={'submit'}>SignUp</Button>
 			</form>
-		</div>
 	);
 };
 

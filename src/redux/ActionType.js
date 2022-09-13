@@ -1,5 +1,6 @@
 export const GET_USERS = 'GET_USERS';
 export const IS_ERROR = 'IS_ERROR';
+export const ACTIVE_USER = 'ACTIVE_USER';
 export const ADD_USER = 'ADD_USER';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const ADD_CHAT = 'ADD_CHAT';
